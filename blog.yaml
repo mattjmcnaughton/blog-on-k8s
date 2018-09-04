@@ -1,0 +1,60 @@
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: blog
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: blog
+  template:
+    metadata:
+      labels:
+        app: blog
+    spec:
+      containers:
+      - name: blog
+        image: docker.io/mattjmcnaughton/blog:79b51035e6ac8ba861e0c7df63cb70bdbc8ea5c1
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blog
+  labels:
+    app: blog
+spec:
+  type: NodePort
+  selector:
+    app: blog
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: blog
+spec:
+  rules:
+  - host: mattjmcnaughton.com
+    http:
+      paths:
+      - backend:
+          serviceName: blog
+          servicePort: 80
+  - host: www.mattjmcnaughton.com
+    http:
+      paths:
+      - backend:
+          serviceName: blog
+          servicePort: 80
+  - host: blog.mattjmcnaughton.com
+    http:
+      paths:
+      - backend:
+          serviceName: blog
+          servicePort: 80
