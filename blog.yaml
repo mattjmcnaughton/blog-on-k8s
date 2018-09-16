@@ -26,35 +26,10 @@ metadata:
   labels:
     app: blog
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: blog
   ports:
     - port: 80
       targetPort: 80
       protocol: TCP
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: blog
-spec:
-  rules:
-  - host: mattjmcnaughton.com
-    http:
-      paths:
-      - backend:
-          serviceName: blog
-          servicePort: 80
-  - host: www.mattjmcnaughton.com
-    http:
-      paths:
-      - backend:
-          serviceName: blog
-          servicePort: 80
-  - host: blog.mattjmcnaughton.com
-    http:
-      paths:
-      - backend:
-          serviceName: blog
-          servicePort: 80
