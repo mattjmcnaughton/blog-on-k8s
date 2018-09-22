@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: blog
-        image: docker.io/mattjmcnaughton/blog:821db7669a8f216fd5e4a960533313ea93d8d053
+        image: docker.io/mattjmcnaughton/blog:31e7305c7b3eb5cabc4006839b70d9b617ae31a9
         ports:
         - containerPort: 80
 ---
